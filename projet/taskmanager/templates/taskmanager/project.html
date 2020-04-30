@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>{{ selected_project.name }}</h2>
+{% for task in selected_project.task_set.all %}
+        <div>
+            <a href="{% url 'task' task_id=task.id %}">{{ task.name }}</a>
+        </div>
+    {% empty %}
+        <p>Aucune tache.</p>
+    {% endfor %}
+
+</body>
+</html>

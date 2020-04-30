@@ -1,14 +1,29 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ConnexionForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .models import Project
 
 
+@login_required
 def projects(request):
-    "Home page that shows all the projects"
-    all_projects = Project.objects.all()  # Nous sélectionnons tous nos projets
+    # Home page that shows all the projects of the connected user
+    user_projects = request.user.projects.all()  # Nous sélectionnons tous nos projets du utilisateur
     return render(request, 'taskmanager/projects.html', locals())
+
+
+@login_required
+def project(request, project_id):
+    selected_project = get_object_or_404(Project, id=project_id)
+    return render(request, 'taskmanager/project.html', locals())
+
+
+@login_required
+def task(request, task_id):
+    selected_task = get_object_or_404(Project, id=task_id)
+    return render(request, 'taskmanager/task.html', locals())
 
 
 def connexion(request):

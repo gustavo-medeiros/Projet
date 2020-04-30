@@ -118,3 +118,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #LOGIN_REDIRECT_URL = '/taskmanager/accueil'
+LOGIN_URL = '/taskmanager/connexion'

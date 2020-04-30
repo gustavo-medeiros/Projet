@@ -9,9 +9,9 @@
 <div> <h1>Welcome! </h1> </div>
 
 <h2>Projects</h2>
-{% for project in all_projects %}
+{% for project in user_projects %}
         <div>
-            <a href="{% url 'lalala' id=album.id %}">{{ project.Name }}</a>
+            <a href="{% url 'project' project_id=project.id %}">{{ project.name }}</a>
         </div>
     {% empty %}
         <p>Aucun projet.</p>
