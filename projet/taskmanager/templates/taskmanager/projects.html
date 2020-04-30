@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div> <h1>Welcome! </h1> </div>
+
+<h2>Projects</h2>
+{% for project in all_projects %}
+        <div>
+            <a href="{% url 'lalala' id=album.id %}">{{ project.Name }}</a>
+        </div>
+    {% empty %}
+        <p>Aucun projet.</p>
+    {% endfor %}
+
+</body>
+</html>

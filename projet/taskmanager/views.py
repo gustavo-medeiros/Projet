@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from .forms import ConnexionForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
+from .models import Project
 
 
-def accueil(request):
-    return render(request, 'taskmanager/accueil.html')
+def projects(request):
+    "Home page that shows all the projects"
+    all_projects = Project.objects.all()  # Nous sélectionnons tous nos projets
+    return render(request, 'taskmanager/projects.html', locals())
 
 
 def connexion(request):
@@ -19,7 +22,7 @@ def connexion(request):
             user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
             if user:  # Si l'objet renvoyé n'est pas None
                 login(request, user)  # nous connectons l'utilisateur
-                return redirect(accueil)
+                return redirect(projects)
             else:  # sinon une erreur sera affichée
                 error = True
     else:
