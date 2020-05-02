@@ -1,10 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ConnexionForm
+from .forms import ConnexionForm, ChatForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .models import Project
+from .models import Project, Task, Journal
+from django.utils import timezone
 
 
 @login_required
@@ -22,8 +23,19 @@ def project(request, project_id):
 
 @login_required
 def task(request, task_id):
-    selected_task = get_object_or_404(Project, id=task_id)
+    selected_task = get_object_or_404(Task, id=task_id)
+    form = ChatForm(request.POST or None)
+    if form.is_valid():
+        entry = form.cleaned_data['entry']
+        Journal(date=timezone.now(), entry=entry, author=request.user, task=selected_task).save()
+    entries = Journal.objects.filter(task=selected_task)
     return render(request, 'taskmanager/task.html', locals())
+
+
+#@login_required
+#def new_info(request):
+#    return render(request, 'blog/contact.html', locals())
+
 
 
 def connexion(request):

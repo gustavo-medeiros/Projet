@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
-<p>
-    <div>from project: {{ selected_task.project }} </div>
-    <div>name: {{ selected_task.name }}</div>
-    <div>description: {{ selected_task.description }}</div>
-    <div>{{selected_task.assignee}}</div>
-    <div>{{selected_task.start_date}}</div>
-    <div>{{selected_task.due_date}}</div>
-    <div>{{selected_task.priority}}</div>
-    <div>{{selected_task.status}}</div>
-</p>
+    <p>
+        <div>from project: {{ selected_task.project }} </div>
+        <div>name: {{ selected_task.name }}</div>
+        <div>description: {{ selected_task.description }}</div>
+        <div>{{selected_task.assignee}}</div>
+        <div>{{selected_task.start_date}}</div>
+        <div>{{selected_task.due_date}}</div>
+        <div>{{selected_task.priority}}</div>
+        <div>{{selected_task.status}}</div>
+    </p>
+
+    {% for journal in entries %}
+        <div>
+            {{journal.author}} ({{ journal.date }}): {{journal.entry}}
+        </div>
+    {% empty %}
+        <p>Aucun journal.</p>
+    {% endfor %}
+
+    <form action="{% url 'task' task_id=selected_task.id%}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit" />
+    </form>
 
 </body>
 </html>
