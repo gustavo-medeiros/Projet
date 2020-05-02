@@ -1,4 +1,5 @@
 from django import forms
+from .models import Task
 
 
 class ConnexionForm(forms.Form):
@@ -8,3 +9,9 @@ class ConnexionForm(forms.Form):
 
 class ChatForm(forms.Form):
     entry = forms.CharField(label="New entry")
+
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        exclude = ('project',)

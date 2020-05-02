@@ -45,3 +45,9 @@ class Journal(models.Model):
     entry = models.TextField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "journal"
+
+    def __str__(self):
+        return self.name

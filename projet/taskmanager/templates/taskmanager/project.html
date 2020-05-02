@@ -7,6 +7,9 @@
 <body>
 
 <h2>{{ selected_project.name }}</h2>
+
+<h3><a href="{% url 'newtask' project_id=selected_project.id %}">Créer une tâche</a> </h3>
+
 {% for task in selected_project.task_set.all %}
         <div>
             <a href="{% url 'task' task_id=task.id %}">{{ task.name }}</a>

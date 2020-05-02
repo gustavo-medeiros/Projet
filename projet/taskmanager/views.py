@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import ConnexionForm, ChatForm
+from .forms import ConnexionForm, ChatForm, TaskForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .models import Project, Task, Journal
@@ -32,10 +32,15 @@ def task(request, task_id):
     return render(request, 'taskmanager/task.html', locals())
 
 
-#@login_required
-#def new_info(request):
-#    return render(request, 'blog/contact.html', locals())
-
+@login_required
+def newtask(request, project_id):
+    form = TaskForm(request.POST or None)
+    if form.is_valid():
+        task_to_add = form.save(commit=False)
+        task_to_add.project = Project(id=project_id)
+        task_to_add.save()
+        return redirect('task', task_id=task_to_add.id)
+    return render(request, 'taskmanager/newtask.html', locals())
 
 
 def connexion(request):
