@@ -13,9 +13,9 @@
 
     {% if user.is_authenticated %}
     Vous êtes connecté, {{ user.username }} !
-    <a href="{% url "projects"%}"> Accueil </a>
+    <a href="{% url 'projects'%}"> Accueil </a>
     {% else %}
-    <form action="{% url "connexion" %}" method="post">
+    <form action="{% url 'connexion' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Se connecter" />

@@ -13,6 +13,7 @@
 {% for task in selected_project.task_set.all %}
         <div>
             <a href="{% url 'task' task_id=task.id %}">{{ task.name }}</a>
+            <a href="{% url 'edittask' task_id=task.id %}">Modifier cette tâche</a>
         </div>
     {% empty %}
         <p>Aucune tache.</p>
