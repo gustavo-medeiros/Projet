@@ -50,4 +50,4 @@ class Journal(models.Model):
         verbose_name = "journal"
 
     def __str__(self):
-        return self.name
+        return self.entry
