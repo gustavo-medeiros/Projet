@@ -6,6 +6,7 @@
 </head>
 <body>
 
+    <h3><a href="{% url 'edittask' task_id=selected_task.id %}">Modifier cette tâche</a> </h3>
     <p>
         <div>from project: {{ selected_task.project }} </div>
         <div>name: {{ selected_task.name }}</div>

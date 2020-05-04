@@ -37,10 +37,19 @@ def newtask(request, project_id):
     form = TaskForm(request.POST or None)
     if form.is_valid():
         task_to_add = form.save(commit=False)
-        task_to_add.project = Project(id=project_id)
+        task_to_add.project = Project.objects.get(id=project_id)
         task_to_add.save()
         return redirect('task', task_id=task_to_add.id)
     return render(request, 'taskmanager/newtask.html', locals())
+
+
+@login_required
+def edittask(request, task_id):
+    form = TaskForm(request.POST or None, instance=Task.objects.get(id=task_id))
+    if form.is_valid():
+        form.save()
+        return redirect('task', task_id=task_id)
+    return render(request, 'taskmanager/newtask.html', locals())  # We use the same template used to create a new task
 
 
 def connexion(request):

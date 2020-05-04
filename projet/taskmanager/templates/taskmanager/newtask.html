@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-        <form action="{% url 'newtask' project_id=project_id%}" method="post">
+    <form method="post"> {# action not informed because can either go to newtask or edittask #}
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
