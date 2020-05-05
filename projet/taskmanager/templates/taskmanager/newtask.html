@@ -5,10 +5,14 @@
     <title>Title</title>
 </head>
 <body>
+{# this template is used both for a new or a edited task #}
+
 {% extends "taskmanager/header.html" %}
-{% block main %}
+{% block navigation %}
     <div>
+
         <a href="{% url 'projects' %}">Projets</a>
+        {# separation to use the proper variables according to the utilisation or this template (adding or editing a new task) #}
         {% if selected_task %}
             / <a href="{% url 'project' project_id=selected_task.project.id%}">{{ selected_task.project.name }}</a>
             / <a href="{% url 'task' task_id=selected_task.id%}">{{selected_task.name}}</a>
@@ -16,8 +20,9 @@
             / <a href="{% url 'project' project_id=selected_project.id%}">{{selected_project.name}}</a>
         {% endif %}
     </div>
-
-    <form method="post"> {# action not informed because can either go to newtask or edittask #}
+{% endblock %}
+{% block main %}
+    <form method="post"> {# action not informed because can either go to newtask or edittask, so it goes to whichone called this template #}
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />

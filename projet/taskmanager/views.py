@@ -17,12 +17,14 @@ def projects(request):
 
 @login_required
 def project(request, project_id):
+    # Page that shows all the tasks of the selected project
     selected_project = get_object_or_404(Project, id=project_id)
     return render(request, 'taskmanager/project.html', locals())
 
 
 @login_required
 def task(request, task_id):
+    # Page that shows task descriptions and its journal
     selected_task = get_object_or_404(Task, id=task_id)
     form = ChatForm(request.POST or None)
     if form.is_valid():
@@ -34,9 +36,10 @@ def task(request, task_id):
 
 @login_required
 def newtask(request, project_id):
+    # Page used to create a new task
     form = TaskForm(request.POST or None)
     selected_project = Project.objects.get(id=project_id)
-    form.fields["assignee"].queryset = selected_project.members.all()  # only accepts the envolved members
+    form.fields["assignee"].queryset = selected_project.members.all()  # only accepts the members involved in the project
     if form.is_valid():
         task_to_add = form.save(commit=False)
         task_to_add.project = Project.objects.get(id=project_id)
@@ -47,10 +50,10 @@ def newtask(request, project_id):
 
 @login_required
 def edittask(request, task_id):
+    # Page used to edit a already existing task
     selected_task = Task.objects.get(id=task_id)
     form = TaskForm(request.POST or None, instance=selected_task)
-    form.fields["assignee"].queryset = Task.objects.get(
-        id=task_id).project.members.all()  # only accepts the envolved members
+    form.fields["assignee"].queryset = Task.objects.get(id=task_id).project.members.all()  # only accepts the members involved in the project
     if form.is_valid():
         form.save()
         return redirect('task', task_id=task_id)
@@ -58,8 +61,8 @@ def edittask(request, task_id):
 
 
 def connexion(request):
+    # login page (manually implemented)
     error = False
-
     if request.method == "POST":
         form = ConnexionForm(request.POST)
         if form.is_valid():
@@ -77,5 +80,6 @@ def connexion(request):
 
 
 def deconnexion(request):
+    # Logout view that has no template, instead it redirects to the login page
     logout(request)
     return redirect(reverse(connexion))

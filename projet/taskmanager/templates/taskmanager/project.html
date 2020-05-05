@@ -6,22 +6,37 @@
 </head>
 <body>
 {% extends "taskmanager/header.html" %}
-{% block main %}
-<div><a href="{% url 'projects' %}">Projets</a> / <a href="{% url 'project' project_id=selected_project.id%}">{{ selected_project.name }}</a></div>
+{% block navigation %}
+<div>
+    <a href="{% url 'projects' %}">Projets</a>
+    / <a href="{% url 'project' project_id=selected_project.id%}">{{ selected_project.name }}</a>
+</div>
+{% endblock %}
 
+{% block main %}
 <h2>{{ selected_project.name }}</h2>
 
-<h3><a href="{% url 'newtask' project_id=selected_project.id %}">Créer une tâche</a> </h3>
+<h3><a href="{% url 'newtask' project_id=selected_project.id %}">Create a task</a> </h3>
 
-{% for task in selected_project.task_set.all %}
-        <div>
-            <a href="{% url 'task' task_id=task.id %}">{{ task.name }}</a>
-            <a href="{% url 'edittask' task_id=task.id %}">Modifier cette tâche</a>
-        </div>
+<table>
+    <tr>
+        <th>Task</th>
+        <th>Assignee</th>
+        <th>Start date</th>
+        <th>Due date</th>
+    </tr>
+    {% for task in selected_project.task_set.all %}
+        <tr>
+            <td><a href="{% url 'task' task_id=task.id %}">{{ task.name }}</a></td>
+            <td>{{task.assignee}}</td>
+            <td>{{task.start_date}}</td>
+            <td>{{task.due_date}}</td>
+            <td><a href="{% url 'edittask' task_id=task.id %}">Modifier cette tâche</a></td>
+        </tr>
     {% empty %}
-        <p>Aucune tache.</p>
+        <tr><td>Aucune tache.</td></tr>
     {% endfor %}
-
+</table>
 {% endblock %}
 </body>
 </html>

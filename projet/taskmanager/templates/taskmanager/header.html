@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Header</title>
+    <style>
+        th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 3px;
+        }
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            width: 100%;
+        }
+    </style> {# table style common to all pages #}
 </head>
 <body>
+{# header common to all pages #}
     <h1>Manage-me</h1>
     <h2>Manage your projects and tasks</h2>
     <h3> Welcome {{request.user}}   (Not you? <a href="{% url 'deconnexion' %}">Disconnect</a>)</h3><br/>
-
+    {% block navigation %}{% endblock %}
     {% block main %}{% endblock %}
 </body>
 </html>

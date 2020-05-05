@@ -6,28 +6,31 @@
 </head>
 <body>
 {% extends "taskmanager/header.html" %}
-{% block main %}
+{% block navigation %}
     <div>
         <a href="{% url 'projects' %}">Projets</a> /
         <a href="{% url 'project' project_id=selected_task.project.id%}">{{ selected_task.project.name }}</a> /
         <a href="{% url 'task' task_id=selected_task.id%}">{{selected_task.name}}</a>
     </div>
+{% endblock %}
 
+{% block main %}
 
     <h4><a href="{% url 'edittask' task_id=selected_task.id %}">Modifier cette tâche</a> </h4>
     <h2>{{ selected_task.project.name }}</h2>
     <h3>{{selected_task.name}}</h3>
 
-    <p>
-        <div>Description: {{ selected_task.description }}</div>
-        <div>Assignee: {{selected_task.assignee}}</div>
-        <div>Start date: {{selected_task.start_date}}</div>
-        <div>Due date: {{selected_task.due_date}}</div>
-        <div>Priority level: {{selected_task.priority}}</div>
-        <div>Status: {{selected_task.status}}</div>
-    </p>
+    <p>{{ selected_task.description }}</p>
 
-    <div>History</div>
+    <table>
+        <tr><th>Assignee</th><td>{{selected_task.assignee}}</td></tr>
+        <tr><th>Start date</th><td>{{selected_task.start_date}}</td></tr>
+        <tr><th>Due date</th><td>{{selected_task.due_date}}</td></tr>
+        <tr><th>Priority level</th><td>{{selected_task.priority}}</td></tr>
+        <tr><th>Status</th><td>{{selected_task.status}}</td></tr>
+    </table>
+
+    <h4>History</h4>
     {% for journal in entries %}
         <div>
             {{journal.author}} ({{ journal.date }}): {{journal.entry}}
@@ -36,6 +39,7 @@
         <p>Aucun journal.</p>
     {% endfor %}
 
+{# form used to submit a new entry in the journal #}
     <form action="{% url 'task' task_id=selected_task.id%}" method="post">
         {% csrf_token %}
         {{ form.as_p }}

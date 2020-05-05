@@ -5,21 +5,22 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Se connecter</h1>
+    <h1>Manage-me</h1>
+    <h2>Manage your projects and tasks</h2><br/>
+    <h3>Se connecter</h3>
 
     {% if error %}
     <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
     {% endif %}
 
-    {% if user.is_authenticated %}
-    Vous êtes connecté, {{ user.username }} !
-    <a href="{% url 'projects'%}"> Accueil </a>
+    {% if user.is_authenticated %} {# if the user tries to access the connexion page but is already connected #}
+        Vous êtes connecté, {{ user.username }} ! <a href="{% url 'projects'%}"> Accueil </a>
     {% else %}
-    <form action="{% url 'connexion' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Se connecter" />
-    </form>
+        <form action="{% url 'connexion' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Se connecter" />
+        </form>
     {% endif %}
 </body>
 </html>

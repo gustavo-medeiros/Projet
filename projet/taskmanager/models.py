@@ -27,7 +27,7 @@ class Task(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    assignee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    assignee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  # A task may be temporarily without a assigned user, until a new one is assigned to it
     start_date = models.DateField()
     due_date = models.DateField()
     priority = models.PositiveIntegerField()
@@ -43,7 +43,7 @@ class Task(models.Model):
 class Journal(models.Model):
     date = models.DateTimeField()
     entry = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  # Deleting the author shall not erase its message
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
 
     class Meta:

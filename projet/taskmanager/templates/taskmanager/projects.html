@@ -6,17 +6,21 @@
 </head>
 <body>
 {% extends "taskmanager/header.html" %}
-{% block main %}
+{% block navigation %}
 <div><a href="{% url 'projects' %}">Projets</a></div>
+{% endblock %}
 
+{% block main %}
 <h2>Projets</h2>
-{% for project in user_projects %}
-        <div>
+<table>
+    {% for project in user_projects %}
+        <tr><td>
             <a href="{% url 'project' project_id=project.id %}">{{ project.name }}</a>
-        </div>
+        </td></tr>
     {% empty %}
-        <p>Aucun projet.</p>
+        <tr><td>Aucun projet.</td></tr>
     {% endfor %}
+</table>
 
 {% endblock %}
 </body>
