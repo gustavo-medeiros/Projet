@@ -35,6 +35,8 @@ def task(request, task_id):
 @login_required
 def newtask(request, project_id):
     form = TaskForm(request.POST or None)
+    selected_project = Project.objects.get(id=project_id)
+    form.fields["assignee"].queryset = selected_project.members.all()  # only accepts the envolved members
     if form.is_valid():
         task_to_add = form.save(commit=False)
         task_to_add.project = Project.objects.get(id=project_id)
@@ -45,7 +47,10 @@ def newtask(request, project_id):
 
 @login_required
 def edittask(request, task_id):
-    form = TaskForm(request.POST or None, instance=Task.objects.get(id=task_id))
+    selected_task = Task.objects.get(id=task_id)
+    form = TaskForm(request.POST or None, instance=selected_task)
+    form.fields["assignee"].queryset = Task.objects.get(
+        id=task_id).project.members.all()  # only accepts the envolved members
     if form.is_valid():
         form.save()
         return redirect('task', task_id=task_id)

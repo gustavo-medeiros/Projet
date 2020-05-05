@@ -6,6 +6,8 @@
 </head>
 <body>
 
+<div><a href="{% url 'projects' %}">Projets</a> / <a href="{% url 'project' project_id=selected_project.id%}">{{ selected_project.name }}</a></div>
+
 <h2>{{ selected_project.name }}</h2>
 
 <h3><a href="{% url 'newtask' project_id=selected_project.id %}">Créer une tâche</a> </h3>

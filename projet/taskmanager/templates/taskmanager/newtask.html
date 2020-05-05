@@ -5,6 +5,17 @@
     <title>Title</title>
 </head>
 <body>
+
+    <div>
+        <a href="{% url 'projects' %}">Projets</a>
+        {% if selected_task %}
+            / <a href="{% url 'project' project_id=selected_task.project.id%}">{{ selected_task.project.name }}</a>
+            / <a href="{% url 'task' task_id=selected_task.id%}">{{selected_task.name}}</a>
+        {% else %}
+            / <a href="{% url 'project' project_id=selected_project.id%}">{{selected_project.name}}</a>
+        {% endif %}
+    </div>
+
     <form method="post"> {# action not informed because can either go to newtask or edittask #}
         {% csrf_token %}
         {{ form.as_p }}

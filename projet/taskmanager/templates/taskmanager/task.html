@@ -6,18 +6,27 @@
 </head>
 <body>
 
-    <h3><a href="{% url 'edittask' task_id=selected_task.id %}">Modifier cette tâche</a> </h3>
+    <div>
+        <a href="{% url 'projects' %}">Projets</a> /
+        <a href="{% url 'project' project_id=selected_task.project.id%}">{{ selected_task.project.name }}</a> /
+        <a href="{% url 'task' task_id=selected_task.id%}">{{selected_task.name}}</a>
+    </div>
+
+
+    <h4><a href="{% url 'edittask' task_id=selected_task.id %}">Modifier cette tâche</a> </h4>
+    <h2>{{ selected_task.project.name }}</h2>
+    <h3>{{selected_task.name}}</h3>
+
     <p>
-        <div>from project: {{ selected_task.project }} </div>
-        <div>name: {{ selected_task.name }}</div>
-        <div>description: {{ selected_task.description }}</div>
-        <div>{{selected_task.assignee}}</div>
-        <div>{{selected_task.start_date}}</div>
-        <div>{{selected_task.due_date}}</div>
-        <div>{{selected_task.priority}}</div>
-        <div>{{selected_task.status}}</div>
+        <div>Description: {{ selected_task.description }}</div>
+        <div>Assignee: {{selected_task.assignee}}</div>
+        <div>Start date: {{selected_task.start_date}}</div>
+        <div>Due date: {{selected_task.due_date}}</div>
+        <div>Priority level: {{selected_task.priority}}</div>
+        <div>Status: {{selected_task.status}}</div>
     </p>
 
+    <div>History</div>
     {% for journal in entries %}
         <div>
             {{journal.author}} ({{ journal.date }}): {{journal.entry}}
