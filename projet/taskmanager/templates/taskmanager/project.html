@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
+{% extends "taskmanager/header.html" %}
+{% block main %}
 <div><a href="{% url 'projects' %}">Projets</a> / <a href="{% url 'project' project_id=selected_project.id%}">{{ selected_project.name }}</a></div>
 
 <h2>{{ selected_project.name }}</h2>
@@ -21,5 +22,6 @@
         <p>Aucune tache.</p>
     {% endfor %}
 
+{% endblock %}
 </body>
 </html>

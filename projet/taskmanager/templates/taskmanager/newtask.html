@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
+{% extends "taskmanager/header.html" %}
+{% block main %}
     <div>
         <a href="{% url 'projects' %}">Projets</a>
         {% if selected_task %}
@@ -21,5 +22,6 @@
         {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>
+{% endblock%}}
 </body>
 </html>

@@ -5,7 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
+{% extends "taskmanager/header.html" %}
+{% block main %}
     <div>
         <a href="{% url 'projects' %}">Projets</a> /
         <a href="{% url 'project' project_id=selected_task.project.id%}">{{ selected_task.project.name }}</a> /
@@ -41,5 +42,6 @@
         <input type="submit" value="Submit" />
     </form>
 
+{% endblock %}
 </body>
 </html>

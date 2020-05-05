@@ -5,9 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-
-<div> <h1>Welcome! </h1> </div>
-
+{% extends "taskmanager/header.html" %}
+{% block main %}
 <div><a href="{% url 'projects' %}">Projets</a></div>
 
 <h2>Projets</h2>
@@ -19,5 +18,6 @@
         <p>Aucun projet.</p>
     {% endfor %}
 
+{% endblock %}
 </body>
 </html>
